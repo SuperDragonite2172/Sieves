@@ -1,9 +1,12 @@
-# Prime Sieves - Python Edition
-# Written by SuperDragonite2172
-# Design Concept from Dave Plummer's Software Dragracing series
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Prime Sieves - Python Edition                                 #
+# Written by SuperDragonite2172                                 #
+# Design Concept from Dave Plummer's Software Dragracing series #
+# Algorithm Used: Sieve of Eratosthenes                         #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-import argparse
-import timeit
+from argparse import ArgumentParser # For command-line arguments
+from timeit import default_timer # For timing the sieve
 
 class PrimeSieve:
 
@@ -30,24 +33,29 @@ class PrimeSieve:
                         self.primes[i] = False
             factor += 2
     
-    # printResults: Prints the results of the sieve runs.
-    def printResults(self, time, pass_num):
-        print("Time: " + str(time))
-        print("Passes: " + str(pass_num))
-        print("Average: " + str(time / pass_num))
+    # printResults: Prints the statistics from the sieve run.
+    def printResults(self, duration, passes, show_results):
+        # TODO: Refine statistics.
+        print("Time: %s\nPasses: %s\nAverage: %s" % (duration, passes, duration / passes))
 
-parser = argparse.ArgumentParser(description="A prime sieve written in Python.  Uses no dependencies.")
-parser.add_argument("-l", "--limit", help="The upper limit of the sieve.  Defaults to 1000000", type=int, default=1000000)
+parser = ArgumentParser(description="Language: Python, Algorithm: Sieve of Eratosthenes, Dependencies: None")
+parser.add_argument("--limit"  , "-l", help="The upper limit of the sieve.", type=int, default=1000000)
+parser.add_argument("--time"   , "-t", help="How long the sieve will run.", type=float, default=10)
+parser.add_argument("--results", "-r", help="Display the primes found.", action="store_true")
+
 args = parser.parse_args()
+limit = args.limit
+time_limit = args.time
+show_results = args.results
 
-timer_start = timeit.default_timer()
+timer_start = default_timer()
 passes = 0
 
-while (timeit.default_timer() - timer_start < 10):
-    sieve = PrimeSieve(args.limit)
+while (default_timer() - timer_start < time_limit):
+    sieve = PrimeSieve(limit)
     sieve.runSieve()
     passes += 1
 
-time_elapsed = timeit.default_timer() - timer_start
+time_elapsed = default_timer() - timer_start
 
-sieve.printResults(time_elapsed, passes)
+sieve.printResults(time_elapsed, passes, show_results)
