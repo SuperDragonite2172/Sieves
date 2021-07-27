@@ -35,8 +35,7 @@ class PrimeSieve:
         
     # printResults: Prints the statistics from the sieve run.
     def printResults(self, duration, passes, show_results):
-        # TODO: Refine statistics.
-        print("Time: %s\nPasses: %s\nAverage: %s" % (duration, passes, duration / passes))
+        print(f"Time: {duration}\nPasses: {passes:,}\nPasses/sec: {passes / duration:,}\nAverage: {duration / passes}")
         if show_results:
             print(dict(enumerate(self.primes,1)))
 
